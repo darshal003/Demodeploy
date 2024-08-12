@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Model Demo</title>
+</head>
+<body>
+    <h1>ML Model Demo</h1>
+    <form method="post">
+        <label for="text">Enter Text:</label>
+        <input type="text" id="text" name="text" value="{{ text }}" required>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    {% if output_text %}
+    <h2>Model Output:</h2>
+    <p>{{ output_text }}</p>
+    {% endif %}
+</body>
+</html>
