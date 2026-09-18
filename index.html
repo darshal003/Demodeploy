@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>ML Model Demo</title>
@@ -16,4 +16,237 @@
     <p>{{ output_text }}</p>
     {% endif %}
 </body>
+</html> -->
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ML Model Demo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+        }
+
+        h1 {
+            color: #222;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-top: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        input[type="submit"] {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f5f7ff;
+            border-left: 5px solid #667eea;
+        }
+
+        .output-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .output-text {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+            }
+
+            input[type="submit"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <div class="icon">🤖</div>
+
+            <h1>ML Model Demo</h1>
+
+            <p class="subtitle">
+                Enter your text and let the machine learning model analyze it.
+            </p>
+        </div>
+
+        <form method="post">
+
+            <div class="form-group">
+
+                <label for="text">Enter Text</label>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="text"
+                        id="text"
+                        name="text"
+                        value="{{ text }}"
+                        placeholder="Type something here..."
+                        required
+                    >
+
+                    <input
+                        type="submit"
+                        value="Predict"
+                    >
+
+                </div>
+
+            </div>
+
+        </form>
+
+        {% if output_text %}
+
+        <div class="output">
+
+            <div class="output-title">
+                🧠 Model Output
+            </div>
+
+            <div class="output-text">
+                {{ output_text }}
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <div class="footer">
+            Powered by Machine Learning
+        </div>
+
+    </div>
+
+</body>
 </html>
+```
