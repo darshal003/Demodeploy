@@ -1,0 +1,27 @@
+
+[Screen: Insight Cards view on the dashboard]
+
+"Our AI/ML stack has one job — turn a raw bank statement into something a customer can understand and act on. We do that with three layers stacked on top of the ANZ transaction data: an anomaly detector, an explainable health score, and a grounded LLM layer for narrative and chat. The design rule across all three is the same: every number we show has to be traceable back to a real transaction, no black boxes, no hallucinations."
+
+Layer 1 — Anomaly Detection (≈ 45 s) — the headline
+[Screen: switch to the Anomalies tab — show the list with explanations]
+
+"The first layer is anomaly detection. We deliberately don't use a single model — we use a hybrid ensemble. The statistical layer is an Isolation Forest from scikit-learn, trained per customer on five engineered features: log-amount, hour of day, day of week, weekend flag, and card-present flag. We exclude planted anomalies from training so the model's idea of 'normal' isn't poisoned."
+
+"On top of that we run six rule-based detectors that map directly to real-world fraud patterns: amount outlier, off-hour, unknown merchant, geographic outlier using haversine distance from the user's centroid, velocity burst — three or more swipes in five minutes — and duplicate charge within 60 seconds. Each rule fires only with a safety check — for example, geographic outlier requires the amount to be above $100, otherwise it'd trip on every $5 airport coffee."
+
+"The key idea is that every flag carries a natural-language explanation — 'amount is 200× the typical Coffee/Snacks spend' — not just a score. On our hero persona Diana, we plant 11 anomalies across all six types as ground truth, and the detector catches 11 out of 11 — 100% recall, plus 4 additional natural finds the ML surfaced on its own."
+
+Layer 2 — Explainable Health Score (≈ 30 s)
+[Screen: switch to Financial Health tab — show the sub-score breakdown]
+
+"The second layer is the Financial Health Score. This is intentionally not a machine-learning model — it's a transparent weighted formula over six sub-scores: savings rate at 30%, expense stability, category balance using Shannon entropy, anomaly penalty, essential-spend ratio, and subscription bloat. We chose a formula over a model so the dashboard can show exactly why the score is what it is, and so the what-if simulator can re-project the score deterministically when the user slides a category cut. That explainability is what makes the score actually useful for behaviour change rather than just a vanity number."
+
+Layer 3 — LLM Layer: Insights + Grounded Chat (≈ 45 s)
+[Screen: open the chat panel, optionally ask a question live]
+
+"The third layer is the LLM. We use it for two things — AI Insight Cards and the chat assistant — both backed by Qwen2.5-72B through Hugging Face Inference, with Gemini as a swappable fallback behind a single LLM_PROVIDER environment variable."
+
+"The critical design choice here is grounding. The LLM never sees raw transactions. It only sees the structured JSON we've already computed — persona summary, top anomalies, health-score breakdown. The system prompt instructs it to quote numbers exactly, refuse questions that aren't in the facts, and avoid regulated financial advice. If the LLM call fails or is unavailable, we fall back to a deterministic rule-based template — the dashboard never breaks."
+
+"So when a user asks 'why is my score 35?' or 'explain my biggest anomaly,' the answer is always the real number, with the real explanation, in plain English."
